@@ -9,7 +9,8 @@
             <input type="text" name="long_url" placeholder="ENTER LONG URL" required>
             <button type="Submit">Shorten</button>
         </from>
-        {%if short_url %}
-            <p>Short URL": <a href=</p>
+        {% if short_url %}
+            <p>Short URL: <a href="{{ short_url }}">{{ short_url }}</a></p>
+        {% endif %}
     </body>
 </html>
