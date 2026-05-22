@@ -13,6 +13,8 @@ def index():
     short_url=None
     if request.method=='POST':
         long_url=request.form['long_url']
+        if not long_url.startswith(('http://','https://')):
+            long_url='https://'+long_url
         code=generate_short()
         urls[code]=long_url
         short_url=request.host_url+code
