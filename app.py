@@ -1,7 +1,10 @@
 from flask import Flask,render_template,request,redirect
+from flask_sqlalchemy import SQLAlchemy
 import string,random
 
 app=Flask(__name__)
+app.config['SQLALCHEMY_DATABASE_URL']='sqlite:///urls.db'
+db= SQLAlchemy(app)
 
 urls={}
 
