@@ -3,10 +3,8 @@ from flask_sqlalchemy import SQLAlchemy
 import string,random
 
 app=Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URL']='sqlite:///urls.db'
+app.config['SQLALCHEMY_DATABASE_URI']='sqlite:///urls.db'
 db= SQLAlchemy(app)
-
-urls={}
 
 def generate_short():
     return ''.join(random.choices(string.ascii_letters+string.digits,k=6))
