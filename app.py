@@ -6,6 +6,12 @@ app=Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI']='sqlite:///urls.db'
 db= SQLAlchemy(app)
 
+class URL(db.Model):
+    id=db.Column(db.Integer, primary_key=True)
+    code=db.Column(db.String(6), unique=True , nullable=False)
+    long_url=db.Column(db.String(500), nullable= False)
+    clicks=db.Column(db.Integer, default=0)
+
 def generate_short():
     return ''.join(random.choices(string.ascii_letters+string.digits,k=6))
 
@@ -17,16 +23,22 @@ def index():
         if not long_url.startswith(('http://','https://')):
             long_url='https://'+long_url
         code=generate_short()
-        urls[code]=long_url
+        new_url= URL(code=code , long_url=long_url)
+        db.session.add(new_url)
+        db.session.commit()
         short_url=request.host_url+code
     return render_template('index.html',short_url=short_url)
 
 @app.route('/<code>')
 def redirect_url(code):
-    long_url=urls.get(code)
-    if long_url:
-        return redirect(long_url)
+    url_entry= URL.query.filter_by(code=code).first()
+    if url_entry:
+        url_entry.clicks+=1
+        db.session.commit()
+        return redirect(url_entry.long_url)
     return "URL NOT FOUND",404
 
 if __name__=='__main__':
+    with app.app_context():
+        db.create_all()
     app.run(debug=True)
