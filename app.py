@@ -27,7 +27,8 @@ def index():
         db.session.add(new_url)
         db.session.commit()
         short_url=request.host_url+code
-    return render_template('index.html',short_url=short_url)
+        all_urls=URL.query.all()
+    return render_template('index.html',short_url=short_url,all_urls=all_urls)
 
 @app.route('/<code>')
 def redirect_url(code):
