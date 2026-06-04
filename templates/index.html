@@ -53,7 +53,18 @@
     </footer>
     <h2>History</h2>
     <table border="1">
+        <tr>
         <th>Original Url</th>
+        <th>Short Code</th>
+        <th >Clicks</th>
+        </tr>
+        {% for url in all_urls%}
+        <tr>
+            <td>{{%utl.long_url}}</td>
+            <td>{{url.code}}</td>
+            <td>{{url.clicks}}</td>
+        </tr>
+        {% endfor %}
     </table>
 </body>
 </html>
