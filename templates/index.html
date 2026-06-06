@@ -10,7 +10,8 @@
             text-align: center;
             background: #f5f5f5;
         }
-        h1 { color: #333; }
+        h1 { color: #333;
+        }
         table {
             width: 100%;
             border-collapse: collapse;
@@ -66,12 +67,14 @@
         <th>Original Url</th>
         <th>Short Code</th>
         <th >Clicks</th>
+        <th>Action</th>
         </tr>
         {% for url in all_urls%}
         <tr>
             <td>{{%utl.long_url}}</td>
             <td>{{url.code}}</td>
             <td>{{url.clicks}}</td>
+            <td><a href="/delete/{{url.id}}">Delete</a></td>
         </tr>
         {% endfor %}
     </table>

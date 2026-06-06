@@ -39,6 +39,14 @@ def redirect_url(code):
         return redirect(url_entry.long_url)
     return "URL NOT FOUND",404
 
+@app.route('/delete/<int:id>')
+def delete_url(id):
+    url=URL.query.get(id)
+    if url:
+        db.session.delete(url)
+        db.session.commit()
+    return redirect('/')
+
 if __name__=='__main__':
     with app.app_context():
         db.create_all()
