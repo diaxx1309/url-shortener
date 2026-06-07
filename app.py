@@ -8,7 +8,7 @@ db= SQLAlchemy(app)
 
 class URL(db.Model):
     id=db.Column(db.Integer, primary_key=True)
-    code=db.Column(db.String(6), unique=True , nullable=False)
+    code=db.Column(db.String(50), unique=True , nullable=False)
     long_url=db.Column(db.String(500), nullable= False)
     clicks=db.Column(db.Integer, default=0)
 
@@ -22,7 +22,11 @@ def index():
         long_url=request.form['long_url']
         if not long_url.startswith(('http://','https://')):
             long_url='https://'+long_url
-        code=generate_short()
+        alias= request.form.get('alias')
+        if alias:
+            code=alias
+        else:
+            code=generate_short()
         new_url= URL(code=code , long_url=long_url)
         db.session.add(new_url)
         db.session.commit()
