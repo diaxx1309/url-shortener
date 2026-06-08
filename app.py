@@ -24,7 +24,11 @@ def index():
             long_url='https://'+long_url
         alias= request.form.get('alias')
         if alias:
-            code=alias
+            existing=URL.query.filter_by(code=alias).first()
+            if existing:
+                code=generate_short()
+            else:
+                code=alias
         else:
             code=generate_short()
         new_url= URL(code=code , long_url=long_url)
